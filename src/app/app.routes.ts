@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RouteLine } from './carry/route-line/route-line'; // Шлях до вашого компонента
-
+import { RouteLine } from './carry/route-line/route-line';
+import { HomePage } from './carry/home-page/home-pg';
 export const routes: Routes = [
-  { path: 'route-line', component: RouteLine },
-  // інші маршрути
+  {
+    path: 'route-line',
+    component: RouteLine,
+  },
+  { path: '', component: HomePage },
 ];
 
 // @NgModule({

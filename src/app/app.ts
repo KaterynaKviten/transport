@@ -15,7 +15,7 @@ import { MatDividerModule } from '@angular/material/divider';
     RouterOutlet,
     RouteLine,
     ComletedLine,
-    //DriversLine,
+    DriversLine,
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
