@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ICarry } from '../carry.model';
 import { MatTableModule } from '@angular/material/table';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-route-line',
@@ -11,6 +12,11 @@ export class RouteLine implements OnInit {
   public routes: ICarry[] = [];
   public ngOnInit(): void {
     this.routes.push({ title: 'Route 1', description: 'Description 1' });
+  }
+  constructor(private location: Location) {}
+
+  public goBack(): void {
+    this.location.back();
   }
 }
 

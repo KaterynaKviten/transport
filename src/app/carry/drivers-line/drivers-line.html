@@ -1,1 +1,17 @@
-<p>drivers-line works!</p>
+<h2>Додати водія</h2>
+<form>
+  <label>Прізвище</label>
+  <input type="text" name="lastName" />
+
+  <label>Ім’я</label>
+  <input type="text" name="firstName" />
+
+  <label>По батькові</label>
+  <input type="text" name="middleName" />
+
+  <label>Стаж (років)</label>
+  <input type="number" name="experience" />
+
+  <button type="submit">Зберегти водія</button>
+</form>
+<button mat-raised-button color="primary" (click)="goBack()">Домашня сторінка</button>

@@ -1,6 +1,25 @@
 <!-- <p>route-line works!</p> -->
-<p>{{ routes[0].title }}</p>
-<p>Hello route</p>
+<!-- <p>{{ routes[0].title }}</p>
+<p>Hello route</p> -->
+
+<div class="modal" id="myModal">
+  <div class="modal-content">
+    <!-- <span class="close-btn" id="closeModal">&times;</span> -->
+    <h2>Додати маршрут</h2>
+    <form class="transportForm">
+      <label>Назва маршруту</label>
+      <input type="text" name="routeName" />
+      <label>Відстань (км)</label>
+      <input type="number" name="distance" />
+      <label>Кількість днів у дорозі</label>
+      <input type="number" name="days" />
+      <label>Оплата (грн)</label>
+      <input type="number" name="payment" />
+      <button type="submit">Зберегти маршрут</button>
+    </form>
+  </div>
+</div>
+<button mat-raised-button color="primary" (click)="goBack()">Домашня сторінка</button>
 
 <!-- <table mat-table class="mat-elevation-z8">
   <ng-container matColumnDef="name">

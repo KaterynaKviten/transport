@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ComletedLine } from './comleted-line';
+import { ComletedLine } from './work-line';
 
 describe('ComletedLine', () => {
   let component: ComletedLine;
@@ -8,9 +8,8 @@ describe('ComletedLine', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ComletedLine]
-    })
-    .compileComponents();
+      imports: [ComletedLine],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ComletedLine);
     component = fixture.componentInstance;
