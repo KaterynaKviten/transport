@@ -6,7 +6,30 @@
   <div class="modal-content">
     <!-- <span class="close-btn" id="closeModal">&times;</span> -->
     <h2>Додати маршрут</h2>
-    <form class="transportForm">
+    <form class="transportForm" (ngSubmit)="addRoute()" #routeForm="ngForm">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Назва маршруту</mat-label>
+        <input matInput type="text" name="routeName" [(ngModel)]="routeName" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Відстань (км)</mat-label>
+        <input matInput type="number" name="distance" [(ngModel)]="distance" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Кількість днів у дорозі</mat-label>
+        <input matInput type="number" name="days" [(ngModel)]="days" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Оплата (грн)</mat-label>
+        <input matInput type="number" name="payment" [(ngModel)]="payment" />
+      </mat-form-field>
+
+      <button mat-raised-button class="custom-button" type="submit">Зберегти</button>
+    </form>
+    <!-- <form class="transportForm">
       <label>Назва маршруту</label>
       <input type="text" name="routeName" />
       <label>Відстань (км)</label>
@@ -16,41 +39,36 @@
       <label>Оплата (грн)</label>
       <input type="number" name="payment" />
       <button type="submit">Зберегти маршрут</button>
-    </form>
+    </form> -->
   </div>
 </div>
-<div class="table-container">
-  <table>
-    <caption>
-      Маршрути
-    </caption>
-    <thead>
-      <tr>
-        <th>Назва</th>
-        <th>Дальність</th>
-        <th>Дні в дорозі</th>
-        <th>Оплата</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Львів</td>
-        <td>500</td>
-        <td>1</td>
-        <td>1000</td>
-      </tr>
-      <tr>
-        <td>Варшава</td>
-        <td>1200</td>
-        <td>2</td>
-        <td>2500</td>
-      </tr>
-      <tr>
-        <td>Трипілля</td>
-        <td>50</td>
-        <td>1</td>
-        <td>500</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="position">
+    <th mat-header-cell *matHeaderCellDef>No.</th>
+    <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Назва</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="distance">
+    <th mat-header-cell *matHeaderCellDef>Дальність</th>
+    <td mat-cell *matCellDef="let element">{{ element.distance }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="days">
+    <th mat-header-cell *matHeaderCellDef>Дні в дорозі</th>
+    <td mat-cell *matCellDef="let element">{{ element.days }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="payment">
+    <th mat-header-cell *matHeaderCellDef>Оплата</th>
+    <td mat-cell *matCellDef="let element">{{ element.payment }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

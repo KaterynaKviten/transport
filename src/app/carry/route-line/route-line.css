@@ -1,0 +1,16 @@
+.transportForm {
+  display: flex;
+  column-gap: 5px;
+  padding: 10px 16px;
+}
+
+.custom-button {
+  background-color: #9ebc8a !important;
+  color: white;
+  border-radius: 5px;
+  padding: 18px 12px;
+  cursor: pointer;
+}
+.custom-button:hover {
+  background-color: #73946b !important;
+}

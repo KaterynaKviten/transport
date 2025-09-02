@@ -1,36 +1,56 @@
-import { Component, OnInit } from '@angular/core';
-import { ICarry } from '../carry.model';
+import { Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+export interface RoutsTable {
+  name: string;
+  distance: number;
+  days: number;
+  payment: number;
+  position: number;
+}
+const ELEMENT_DATA: RoutsTable[] = [
+  { position: 1, name: 'Львів', distance: 500, days: 1, payment: 1000 },
+  { position: 2, name: 'Варшава', distance: 1200, days: 2, payment: 2500 },
+  { position: 3, name: 'Трипілля', distance: 50, days: 1, payment: 500 },
+];
 
 @Component({
   selector: 'app-route-line',
+  standalone: true,
+  imports: [MatTableModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule],
   templateUrl: './route-line.html',
   styleUrls: ['./route-line.css'],
 })
-export class RouteLine implements OnInit {
-  public routes: ICarry[] = [];
-  public ngOnInit(): void {
-    this.routes.push({ title: 'Route 1', description: 'Description 1' });
+export class RouteLine {
+  displayedColumns: string[] = ['position', 'name', 'distance', 'days', 'payment'];
+  dataSource = ELEMENT_DATA;
+
+  routeName = '';
+  distance: number | null = null;
+  days: number | null = null;
+  payment: number | null = null;
+
+  addRoute() {
+    if (this.routeName && this.distance !== null && this.days !== null && this.payment !== null) {
+      this.dataSource = [
+        ...this.dataSource,
+        {
+          position: this.dataSource.length + 1,
+          name: this.routeName,
+          distance: this.distance,
+          days: this.days,
+          payment: this.payment,
+        },
+      ];
+
+      // Очистка полів форми
+      this.routeName = '';
+      this.distance = null;
+      this.days = null;
+      this.payment = null;
+    }
   }
-}
-
-export interface Route {
-  name: string;
-  description: string;
-}
-
-const ROUTES: Route[] = [
-  { name: 'Маршрут 1', description: 'Опис 1' },
-  { name: 'Маршрут 2', description: 'Опис 2' },
-];
-
-// @Component({
-//   selector: 'app-table-example',
-//   standalone: true,
-//   imports: [MatTableModule],
-//   templateUrl: './table-example.html',
-// })
-export class TableExampleComponent {
-  displayedColumns: string[] = ['name', 'description'];
-  dataSource = ROUTES;
 }

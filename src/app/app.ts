@@ -11,7 +11,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
-
+// import { MatFormFieldModule } from '@angular/material/form-field';
+// import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -28,6 +29,9 @@ import { RouterLink } from '@angular/router';
     MatListModule,
     MatIconModule,
     RouterLink,
+    // MatFormFieldModule,
+    // MatInputModule,
+    // MatButtonModule,
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],

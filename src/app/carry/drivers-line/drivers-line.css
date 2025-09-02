@@ -1,0 +1,20 @@
+/* .custom-button {
+  background-color: #9ebc8a !important;
+  color: white;
+  border-radius: 5px;
+  padding: 18px 12px;
+  cursor: pointer;
+} */
+
+.button-add {
+  background-color: #e9a319 !important;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  border-color: #9ebc8a;
+  margin: 12px;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow: 2px 2px 1px 0.5px rgba(4, 33, 12, 0.2);
+}
