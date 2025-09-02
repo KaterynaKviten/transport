@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { filter, range, Subscriber, map, Observable, BehaviorSubject } from 'rxjs';
 import { RouteLine } from './carry/route-line/route-line';
@@ -11,6 +11,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
+import { LoginComponent } from './auth/login.components';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+
 // import { MatFormFieldModule } from '@angular/material/form-field';
 // import { MatInputModule } from '@angular/material/input';
 @Component({
@@ -29,11 +32,19 @@ import { RouterLink } from '@angular/router';
     MatListModule,
     MatIconModule,
     RouterLink,
-    // MatFormFieldModule,
-    // MatInputModule,
-    // MatButtonModule,
+    LoginComponent,
+    MatDialogModule,
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
 })
-export class App {}
+export class App implements OnInit {
+  constructor(private dialog: MatDialog) {}
+
+  ngOnInit() {
+    this.dialog.open(LoginComponent, {
+      width: '350px',
+      disableClose: true, // користувач не зможе закрити діалог без авторизації
+    });
+  }
+}
