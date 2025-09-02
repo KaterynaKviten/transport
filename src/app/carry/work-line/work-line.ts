@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-work-line',
@@ -7,12 +6,4 @@ import { Location } from '@angular/common';
   templateUrl: './work-line.html',
   styleUrl: './work-line.css',
 })
-export class WorkLine {
-  constructor(private location: Location) {
-    this.location = location;
-  }
-
-  public goBack(): void {
-    this.location.back();
-  }
-}
+export class WorkLine {}

@@ -1,1 +1,20 @@
-<router-outlet></router-outlet>
+<div class="layout">
+  <mat-sidenav-container>
+    <mat-sidenav mode="side" opened>
+      <mat-toolbar>
+        <span class="material-symbols-outlined">local_shipping</span>
+      </mat-toolbar>
+      <mat-nav-list>
+        <a mat-list-item routerLink="/drivers-line" routerLinkActive="active">Водії</a>
+        <a mat-list-item routerLink="/route-line" routerLinkActive="active">Маршрути</a>
+        <a mat-list-item routerLink="/work-line" routerLinkActive="active">Перевезення</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <mat-toolbar class="custom-toolbar">Облік вантажних перевезень</mat-toolbar>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

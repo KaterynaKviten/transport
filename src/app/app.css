@@ -1,0 +1,8 @@
+.material-symbols-outlined {
+  font-size: 70px;
+  color: #ef9651;
+}
+mat-toolbar.custom-toolbar {
+  background: #537d5d;
+  color: #fff;
+}

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-drivers-line',
@@ -7,10 +6,4 @@ import { Location } from '@angular/common';
   templateUrl: './drivers-line.html',
   styleUrl: './drivers-line.css',
 })
-export class DriversLine {
-  constructor(private location: Location) {}
-
-  public goBack(): void {
-    this.location.back();
-  }
-}
+export class DriversLine {}
