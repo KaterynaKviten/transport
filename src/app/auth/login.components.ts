@@ -7,11 +7,19 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from './registr.components';
 import { AuthService } from './auth.service';
+import { subscribeOn } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule],
+  imports: [
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    RegisterComponent,
+  ],
   template: `
     <mat-dialog-content>
       <div class="login-container">
@@ -38,14 +46,17 @@ import { AuthService } from './auth.service';
 export class LoginComponent {
   username = '';
   password = '';
-  constructor(private dialog: MatDialog, private authService: AuthService) {}
+  constructor(private authService: AuthService, private dialog: MatDialog) {}
 
   login() {
-    if (this.authService.login(this.username, this.password)) {
-      this.dialog.closeAll();
-    } else {
-      alert('Невірний логін або пароль');
-    }
+    this.authService.login(this.username, this.password).subscribe({
+      next: () => {
+        alert('Вхід успішний!');
+      },
+      error: () => {
+        alert('Невірний логін або пароль');
+      },
+    });
   }
   openRegister() {
     this.dialog.closeAll();

@@ -1,6 +1,7 @@
 {
   "name": "prj-angular",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
@@ -31,6 +32,9 @@
     "@angular/platform-browser": "^20.2.0",
     "@angular/router": "^20.2.0",
     "express": "^5.1.0",
+    "mongodb": "^6.19.0",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

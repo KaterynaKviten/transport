@@ -4,6 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from './auth.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-register',
@@ -35,10 +36,19 @@ export class RegisterComponent {
   username = '';
   password = '';
   email = '';
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private dialogRef: MatDialogRef<RegisterComponent>
+  ) {}
   register() {
-    if (this.authService.register(this.username, this.password, this.email)) {
-      alert('Реєстрація успішна!');
-    }
+    this.authService.register(this.username, this.password, this.email).subscribe({
+      next: () => {
+        alert('Реєстрація успішна!');
+        this.dialogRef.close();
+      },
+      error: () => {
+        alert('Реєстрація не вдалася');
+      },
+    });
   }
 }
