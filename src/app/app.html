@@ -15,11 +15,23 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <mat-toolbar class="custom-toolbar">Облік вантажних перевезень</mat-toolbar>
+      <a mat-button routerLink="/login">Увійти</a>
+      <a mat-button routerLink="/register">Реєстрація</a>
+      <mat-toolbar class="custom-toolbar"
+        >Облік вантажних перевезень
+        <button mat-button (click)="logout()">Вийти</button>
+      </mat-toolbar>
+      <mat-toolbar>
+        <span *ngIf="isLoggedIn()">
+          <mat-icon>account_circle</mat-icon>
+          {{ userName }}
+          <button mat-button (click)="logout()">Вийти</button>
+        </span>
+        <span *ngIf="!isLoggedIn()">
+          <a mat-button routerLink="/login">Увійти</a>
+        </span>
+      </mat-toolbar>
       <div class="content">
-        <!-- <div class="spacer">
-          <button mat-raised-button (click)="openLoginDialog()">Увійти</button>
-        </div> -->
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>

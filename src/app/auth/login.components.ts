@@ -3,11 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from './registr.components';
 import { AuthService } from './auth.service';
+import { RouterModule } from '@angular/router';
 import { subscribeOn } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,51 +17,26 @@ import { subscribeOn } from 'rxjs';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatDialogModule,
     RegisterComponent,
+    RouterModule,
   ],
-  template: `
-    <mat-dialog-content>
-      <div class="login-container">
-        <h3>Вітаємо!</h3>
-        <form (ngSubmit)="login()">
-          <mat-form-field class="full-width">
-            <mat-label>Логін</mat-label>
-            <input matInput [(ngModel)]="username" name="username" required />
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <mat-label>Пароль</mat-label>
-            <input matInput [(ngModel)]="password" name="password" type="password" required />
-          </mat-form-field>
-          <button mat-raised-button class="button-login" type="submit">Увійти</button>
-          <button mat-button class="button-registr" type="button" (click)="openRegister()">
-            Реєстрація
-          </button>
-        </form>
-      </div>
-    </mat-dialog-content>
-  `,
+  templateUrl: './login.components.html',
   styleUrls: ['./auth.css'],
 })
 export class LoginComponent {
   username = '';
   password = '';
-  constructor(private authService: AuthService, private dialog: MatDialog) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   login() {
     this.authService.login(this.username, this.password).subscribe({
       next: () => {
         alert('Вхід успішний!');
+        this.router.navigate(['/work-line']);
       },
       error: () => {
         alert('Невірний логін або пароль');
       },
-    });
-  }
-  openRegister() {
-    this.dialog.closeAll();
-    this.dialog.open(RegisterComponent, {
-      width: '400px',
     });
   }
 }

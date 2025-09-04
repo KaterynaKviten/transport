@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterOutlet, Router } from '@angular/router';
 import { filter, range, Subscriber, map, Observable, BehaviorSubject } from 'rxjs';
 import { RouteLine } from './carry/route-line/route-line';
 import { WorkLine } from './carry/work-line/work-line';
@@ -12,10 +12,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
 import { LoginComponent } from './auth/login.components';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-
-// import { MatFormFieldModule } from '@angular/material/form-field';
-// import { MatInputModule } from '@angular/material/input';
+import { AuthService } from './auth/auth.service';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -33,18 +31,23 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
     MatIconModule,
     RouterLink,
     LoginComponent,
-    MatDialogModule,
+    CommonModule,
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
 })
-export class App implements OnInit {
-  constructor(private dialog: MatDialog) {}
+export class AppComponent {
+  constructor(private auth: AuthService, private router: Router) {}
 
-  ngOnInit() {
-    this.dialog.open(LoginComponent, {
-      width: '350px',
-      disableClose: true, // користувач не зможе закрити діалог без авторизації
-    });
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['/login']);
+  }
+  get userName(): string | null {
+    return this.auth.currentUser?.username ?? null;
+  }
+
+  isLoggedIn(): boolean {
+    return this.auth.isAuthenticated();
   }
 }
