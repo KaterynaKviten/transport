@@ -1,47 +1,7 @@
-<!-- <p>route-line works!</p> -->
-<!-- <p>{{ routes[0].title }}</p>
-<p>Hello route</p> -->
-
-<div class="modal" id="myModal">
-  <div class="modal-content">
-    <!-- <span class="close-btn" id="closeModal">&times;</span> -->
-    <h2>Додати маршрут</h2>
-    <form class="transportForm" (ngSubmit)="addRoute()" #routeForm="ngForm">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Назва маршруту</mat-label>
-        <input matInput type="text" name="routeName" [(ngModel)]="routeName" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Відстань (км)</mat-label>
-        <input matInput type="number" name="distance" [(ngModel)]="distance" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Кількість днів у дорозі</mat-label>
-        <input matInput type="number" name="days" [(ngModel)]="days" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Оплата (грн)</mat-label>
-        <input matInput type="number" name="payment" [(ngModel)]="payment" />
-      </mat-form-field>
-
-      <button mat-raised-button class="custom-button" type="submit">Зберегти</button>
-    </form>
-    <!-- <form class="transportForm">
-      <label>Назва маршруту</label>
-      <input type="text" name="routeName" />
-      <label>Відстань (км)</label>
-      <input type="number" name="distance" />
-      <label>Кількість днів у дорозі</label>
-      <input type="number" name="days" />
-      <label>Оплата (грн)</label>
-      <input type="number" name="payment" />
-      <button type="submit">Зберегти маршрут</button>
-    </form> -->
-  </div>
-</div>
+<button class="button-add-open" title="Додати новий запис" (click)="openDialog()">
+  <mat-icon>add_circle</mat-icon>
+  Додати
+</button>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <ng-container matColumnDef="position">

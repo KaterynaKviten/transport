@@ -1,79 +1,19 @@
-<!-- <h2>Додати водія</h2> -->
-<!-- <form>
-  <label>Прізвище</label>
-  <input type="text" name="lastName" />
-
-  <label>Ім’я</label>
-  <input type="text" name="firstName" />
-
-  <label>По батькові</label>
-  <input type="text" name="middleName" />
-
-  <label>Стаж (років)</label>
-  <input type="number" name="experience" />
-
-  <button type="submit">Зберегти водія</button>
-</form> -->
-
-<!-- <h2 mat-dialog-title>Додати водія</h2>
-<li>
-  <mat-form-field>
-    <mat-label>Прізвище</mat-label>
-    <input matInput [(ngModel)]="lastName" name="lastName" />
-  </mat-form-field>
-</li>
-
-<mat-dialog-content>
-  <mat-form-field class="full-width">
-    <mat-label>Прізвище</mat-label>
-    <input matInput [(ngModel)]="lastName" name="lastName" />
-  </mat-form-field>
-  <mat-form-field class="full-width">
-    <mat-label>Ім’я</mat-label>
-    <input matInput [(ngModel)]="firstName" name="firstName" />
-  </mat-form-field>
-  <mat-form-field class="full-width">
-    <mat-label>По батькові</mat-label>
-    <input matInput [(ngModel)]="middleName" name="middleName" />
-  </mat-form-field>
-  <mat-form-field class="full-width">
-    <mat-label>Стаж (років)</mat-label>
-    <input matInput type="number" [(ngModel)]="experience" name="experience" />
-  </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Скасувати</button>
-  <button
-    mat-button
-    [mat-dialog-close]="{lastName, firstName, middleName, experience}"
-    cdkFocusInitial
-  >
-    Зберегти
-  </button>
-</mat-dialog-actions> -->
-
-<button mat-raised-button class="button-add" (click)="openDialog()">
+<button class="button-add-open" title="Додати новий запис" (click)="openDialog()">
   <mat-icon>add_circle</mat-icon>
   Додати
 </button>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
-
-  <!-- Position Column -->
   <ng-container matColumnDef="position">
     <th mat-header-cell *matHeaderCellDef>No.</th>
     <td mat-cell *matCellDef="let element">{{ element.position }}</td>
   </ng-container>
 
-  <!-- Name Column -->
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>ПІБ</th>
     <td mat-cell *matCellDef="let element">{{ element.name }}</td>
   </ng-container>
 
-  <!-- Weight Column -->
   <ng-container matColumnDef="experience">
     <th mat-header-cell *matHeaderCellDef>Стаж</th>
     <td mat-cell *matCellDef="let element">{{ element.experience }}</td>

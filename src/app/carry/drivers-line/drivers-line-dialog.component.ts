@@ -10,6 +10,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   selector: 'app-drivers-line-dialog',
   standalone: true,
   imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule],
+  // styleUrls: ['../carry.css'],
   template: `
     <h2 mat-dialog-title>Додати водія</h2>
     <mat-dialog-content>

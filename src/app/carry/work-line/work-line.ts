@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { DatePipe } from '@angular/common';
+import { WorkLineDialogComponents } from './work-line-dialog.components';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 export interface WorkTable {
   position: number;
@@ -40,11 +43,33 @@ const ELEMENT_DATA: WorkTable[] = [
 @Component({
   selector: 'app-work-line',
   standalone: true,
-  imports: [MatTableModule, DatePipe],
+  imports: [MatTableModule, DatePipe, WorkLineDialogComponents, MatIconModule],
   templateUrl: './work-line.html',
   styleUrl: './work-line.css',
 })
 export class WorkLine {
+  constructor(private dialog: MatDialog) {}
+  openDialog(): void {
+    const dialogRef = this.dialog.open(WorkLineDialogComponents, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.dataSource = [
+          ...this.dataSource,
+          {
+            position: this.dataSource.length + 1,
+            nameDriver: result.nameDriver,
+            nameRoute: result.nameRoute,
+            departuresStart: result.departuresStart,
+            departuresEnd: result.departuresEnd,
+            bonus: result.bonus,
+          },
+        ];
+      }
+    });
+  }
   displayedColumns: string[] = [
     'position',
     'nameDriver',

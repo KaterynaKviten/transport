@@ -2,8 +2,11 @@ import { Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { RouteLineDialogComponent } from './route-line-dialog.component';
+import { MatIconModule } from '@angular/material/icon';
+
 export interface RoutsTable {
   name: string;
   distance: number;
@@ -20,9 +23,16 @@ const ELEMENT_DATA: RoutsTable[] = [
 @Component({
   selector: 'app-route-line',
   standalone: true,
-  imports: [MatTableModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule],
+  imports: [
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    RouteLineDialogComponent,
+    MatIconModule,
+  ],
   templateUrl: './route-line.html',
-  styleUrls: ['./route-line.css'],
+  styleUrl: './route-line.css',
 })
 export class RouteLine {
   displayedColumns: string[] = ['position', 'name', 'distance', 'days', 'payment'];
@@ -32,6 +42,29 @@ export class RouteLine {
   distance: number | null = null;
   days: number | null = null;
   payment: number | null = null;
+
+  constructor(private dialog: MatDialog) {}
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(RouteLineDialogComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.dataSource = [
+          ...this.dataSource,
+          {
+            position: this.dataSource.length + 1,
+            name: result.routeName,
+            distance: result.distance,
+            days: result.days,
+            payment: result.payment,
+          },
+        ];
+      }
+    });
+  }
 
   addRoute() {
     if (this.routeName && this.distance !== null && this.days !== null && this.payment !== null) {
@@ -46,7 +79,6 @@ export class RouteLine {
         },
       ];
 
-      // Очистка полів форми
       this.routeName = '';
       this.distance = null;
       this.days = null;

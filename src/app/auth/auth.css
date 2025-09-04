@@ -32,8 +32,10 @@
 .button-registr:hover {
   background-color: #537d5d !important;
 } */
-.login-container {
-  max-width: 400px;
+.login-container,
+.registr-container {
+  max-width: 270px !important;
+  height: 350px !important;
   margin: 40px auto;
   background: #fff;
   padding: 24px;

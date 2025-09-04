@@ -1,44 +1,7 @@
-<h2>Додати перевезення</h2>
-<form>
-  <label>Маршрут</label>
-  <input type="text" name="routeName" />
-
-  <label>Водій</label>
-  <input type="text" name="firstName" />
-
-  <label>Дата відправлення</label>
-  <input type="date" name="startDate" />
-  <label>Дата прибуття</label>
-  <input type="date" name="endDate" />
-
-  <label>Премія (грн)</label>
-  <input type="number" name="bonus" />
-
-  <!-- <select name="route">
-    <option *ngFor="let route of routes" [value]="route.id">
-      {{ route.name }} ({{ route.distance }} км)
-    </option>
-  </select>
-
-  <label>Водій</label>
-  <select name="driver" multiple>
-    <option *ngFor="let driver of drivers" [value]="driver.id">
-      {{ driver.lastName }} {{ driver.firstName }}
-    </option>
-  </select>
-
-  <label>Дата відправлення</label>
-  <input type="date" name="startDate" />
-
-  <label>Дата прибуття</label>
-  <input type="date" name="endDate" />
-
-  <label>Премія (грн)</label>
-  <input type="number" name="bonus" /> -->
-
-  <button type="submit">Зберегти перевезення</button>
-</form>
-
+<button class="button-add-open" title="Додати новий запис" (click)="openDialog()">
+  <mat-icon>add_circle</mat-icon>
+  Додати
+</button>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <ng-container matColumnDef="position">
     <th mat-header-cell *matHeaderCellDef>No.</th>

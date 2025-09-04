@@ -6,6 +6,12 @@ mat-toolbar.custom-toolbar {
   background: #537d5d;
   color: #fff;
 }
+
 .active-indicator-color {
   color: #ef9651 !important;
+}
+.content {
+  padding: 16px;
+  margin-top: -40px;
+  background-color: whitesmoke;
 }
