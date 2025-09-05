@@ -5,19 +5,32 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-route-line-dialog',
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule],
-  // styleUrls: ['../carry.css'],
+  imports: [
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
+  ],
+  styleUrls: ['../carry.css'],
   template: `
-    <h2 mat-dialog-title>Додати маршрут</h2>
+    <div class="dialog-header">
+      <h2 mat-dialog-title>Додати маршрут</h2>
+      <button mat-icon-button (click)="onNoClick()" class="close-btn">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
     <form (ngSubmit)="onSave()">
       <mat-dialog-content>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Назва маршруту</mat-label>
-          <input matInput type="text" name="routeName" [(ngModel)]="routeName" />
+          <input matInput type="text" name="name" [(ngModel)]="name" />
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
@@ -35,16 +48,15 @@ import { MatDialogModule } from '@angular/material/dialog';
           <input matInput type="number" name="payment" [(ngModel)]="payment" />
         </mat-form-field>
 
-        <button mat-raised-button class="custom-button" type="submit">Зберегти</button>
+        <button mat-button [mat-dialog-close]="{name, distance, days, payment}" class="save-btn">
+          Зберегти
+        </button>
       </mat-dialog-content>
-      <mat-dialog-actions>
-        <button mat-button type="button" (click)="onNoClick()">Скасувати</button>
-      </mat-dialog-actions>
     </form>
   `,
 })
 export class RouteLineDialogComponent {
-  routeName = '';
+  name = '';
   distance: number | null = null;
   days: number | null = null;
   payment: number | null = null;
@@ -53,7 +65,7 @@ export class RouteLineDialogComponent {
 
   onSave(): void {
     this.dialogRef.close({
-      routeName: this.routeName,
+      name: this.name,
       distance: this.distance,
       days: this.days,
       payment: this.payment,

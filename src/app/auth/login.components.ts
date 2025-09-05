@@ -35,7 +35,7 @@ export class LoginComponent {
         this.router.navigate(['/work-line']);
       },
       error: () => {
-        alert('Невірний логін або пароль');
+        alert('Невірний логін або пароль🥺');
       },
     });
   }

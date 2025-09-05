@@ -19,14 +19,21 @@ export class RegisterComponent {
   email = '';
   constructor(private authService: AuthService, private router: Router) {}
   register() {
+    if (!this.username || !this.password || !this.email) {
+      alert('Заповніть всі поля!🥺');
+      return;
+    }
     this.authService.register(this.username, this.password, this.email).subscribe({
       next: (res: any) => {
         localStorage.setItem('user', JSON.stringify(res.user));
         this.router.navigate(['/work-line']);
       },
       error: () => {
-        alert('Реєстрація не вдалася');
+        alert('Реєстрація не вдалася🥺');
       },
     });
+  }
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 }

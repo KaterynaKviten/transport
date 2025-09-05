@@ -13,6 +13,7 @@
       <mat-label>Email</mat-label>
       <input matInput [(ngModel)]="email" name="email" type="email" required />
     </mat-form-field>
-    <button mat-button type="submit">Зареєструватися</button>
+    <button mat-button type="submit" class="button-registr">Зареєструватися</button>
+    <button mat-button type="button" (click)="goToLogin()" class="button-login">Увійти</button>
   </form>
 </div>

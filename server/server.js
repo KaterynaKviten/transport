@@ -6,6 +6,7 @@ import passport from 'passport';
 import crypto from 'crypto';
 import { promisify } from 'util';
 import { getDb } from './db.js';
+import { booleanAttribute } from '@angular/core';
 
 // const userDb = db.collection('users');
 const pbkdf2Async = promisify(crypto.pbkdf2);
@@ -78,6 +79,65 @@ app.post('/api/register', async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: 'Error hashing password or saving user' });
   }
+});
+
+app.post('/api/driver/create', async (req, res) => {
+  const db = await getDb();
+  const driversCollection = db.collection('drivers');
+  await driversCollection.insertOne({
+    lastName: req.body.lastName,
+    firstName: req.body.firstName,
+    middleName: req.body.middleName,
+    experience: req.body.experience,
+  });
+  res.status(201).json({ message: 'Driver created' });
+});
+
+app.post('/api/routes/create', async (req, res) => {
+  const db = await getDb();
+  const routesCollection = db.collection('routes');
+  await routesCollection.insertOne({
+    name: req.body.name,
+    distance: req.body.distance,
+    days: req.body.days,
+    payment: req.body.payment,
+  });
+  res.status(201).json({ message: 'Route created' });
+});
+
+app.post('/api/work/create', async (req, res) => {
+  const db = await getDb();
+  const workCollection = db.collection('work');
+  await workCollection.insertOne({
+    name: req.body.name,
+    driver: req.body.driver,
+    startDate: req.body.startDate,
+    endDate: req.body.endDate,
+    payment: req.body.payment,
+    bonus: req.body.bonus,
+  });
+  res.status(201).json({ message: 'Work created' });
+});
+
+app.get('/api/drivers', async (req, res) => {
+  const db = await getDb();
+  const driversCollection = db.collection('drivers');
+  const drivers = await driversCollection.find().toArray();
+  res.json(drivers);
+});
+
+app.get('/api/routes', async (req, res) => {
+  const db = await getDb();
+  const routesCollection = db.collection('routes');
+  const routes = await routesCollection.find().toArray();
+  res.json(routes);
+});
+
+app.get('/api/work', async (req, res) => {
+  const db = await getDb();
+  const worksCollection = db.collection('work');
+  const work = await worksCollection.find().toArray();
+  res.json(work);
 });
 
 app.use(express.static(distDir));

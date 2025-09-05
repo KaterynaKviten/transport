@@ -5,24 +5,53 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-route-line-dialog',
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule],
-  //   styleUrls: ['../carry.css'],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
+    MatSelectModule,
+  ],
+  styleUrls: ['../carry.css'],
   template: `
-    <h2 mat-dialog-title>Додати перевезення</h2>
+    <div class="dialog-header">
+      <h2 mat-dialog-title>Додати перевезення</h2>
+      <button mat-icon-button (click)="onNoClick()" class="close-btn">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
     <form (ngSubmit)="onSave()">
       <mat-dialog-content>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Маршрут</mat-label>
-          <input matInput type="text" name="routeName" [(ngModel)]="routeName" />
+          <mat-select name="selectedRoute" [(ngModel)]="selectedRoute">
+            <mat-option *ngFor="let route of routes" [value]="route.name">
+              {{ route.name }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Водій</mat-label>
-          <input matInput type="text" name="driver" [(ngModel)]="driver" />
+          <mat-select name="selectedDriver" [(ngModel)]="selectedDriver">
+            <mat-option
+              *ngFor="let driver of drivers"
+              [value]="driver.lastName + ' ' + driver.firstName + ' ' + driver.middleName"
+            >
+              {{ driver.lastName }} {{ driver.firstName }} {{ driver.middleName }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
@@ -36,33 +65,67 @@ import { MatDialogModule } from '@angular/material/dialog';
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Оплата (грн)</mat-label>
+          <input matInput type="number" name="payment" [(ngModel)]="payment" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Премія (грн)</mat-label>
           <input matInput type="number" name="bonus" [(ngModel)]="bonus" />
         </mat-form-field>
 
-        <button mat-raised-button class="custom-button" type="submit">Зберегти</button>
+        <button
+          mat-button
+          [mat-dialog-close]="{
+            name: selectedRoute,
+            driver: selectedDriver,
+            startDate: startDate,
+            endDate: endDate,
+            payment: payment,
+            bonus: bonus
+          }"
+          class="save-btn"
+        >
+          Зберегти
+        </button>
       </mat-dialog-content>
-      <mat-dialog-actions>
-        <button mat-button type="button" (click)="onNoClick()">Скасувати</button>
-      </mat-dialog-actions>
     </form>
   `,
 })
 export class WorkLineDialogComponents {
-  routeName = '';
+  name = '';
   driver = '';
   startDate: string = '';
   endDate: string = '';
+  payment: number | null = null;
   bonus: number | null = null;
 
-  constructor(private dialogRef: MatDialogRef<WorkLineDialogComponents>) {}
+  selectedRoute: string = '';
+  selectedDriver: string = '';
 
+  routes: any[] = [];
+  drivers: any[] = [];
+
+  constructor(
+    private dialogRef: MatDialogRef<WorkLineDialogComponents>,
+    private http: HttpClient
+  ) {}
+
+  ngOnInit() {
+    this.http.get<any[]>('/api/routes').subscribe((data) => {
+      this.routes = data;
+    });
+    this.http.get<any[]>('/api/drivers').subscribe((data) => {
+      this.drivers = data;
+    });
+  }
   onSave(): void {
     this.dialogRef.close({
-      routeName: this.routeName,
-      driver: this.driver,
+      name: this.selectedRoute,
+      driver: this.selectedDriver,
       startDate: this.startDate,
       endDate: this.endDate,
+      payment: this.payment,
       bonus: this.bonus,
     });
   }

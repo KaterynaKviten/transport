@@ -1,0 +1,34 @@
+/* .button-add-open {
+  background-color: #e9a319 !important;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  border-color: #9ebc8a;
+  margin: 12px;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow: 2px 2px 1px 0.5px rgba(4, 33, 12, 0.2);
+}
+.button-add-open:hover {
+  background-color: #d4880f !important;
+} */
+.close-btn {
+  margin-left: auto !important;
+}
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+.save-btn {
+  background-color: #73946b !important;
+  color: white;
+}
+.save-btn:hover {
+  background-color: #537d5d !important;
+}

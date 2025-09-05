@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { RouteLineDialogComponent } from './route-line-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
+import { HttpClient } from '@angular/common/http';
 
 export interface RoutsTable {
   name: string;
@@ -14,11 +15,6 @@ export interface RoutsTable {
   payment: number;
   position: number;
 }
-const ELEMENT_DATA: RoutsTable[] = [
-  { position: 1, name: 'Львів', distance: 500, days: 1, payment: 1000 },
-  { position: 2, name: 'Варшава', distance: 1200, days: 2, payment: 2500 },
-  { position: 3, name: 'Трипілля', distance: 50, days: 1, payment: 500 },
-];
 
 @Component({
   selector: 'app-route-line',
@@ -35,15 +31,7 @@ const ELEMENT_DATA: RoutsTable[] = [
   styleUrl: './route-line.css',
 })
 export class RouteLine {
-  displayedColumns: string[] = ['position', 'name', 'distance', 'days', 'payment'];
-  dataSource = ELEMENT_DATA;
-
-  routeName = '';
-  distance: number | null = null;
-  days: number | null = null;
-  payment: number | null = null;
-
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private http: HttpClient) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(RouteLineDialogComponent, {
@@ -52,37 +40,32 @@ export class RouteLine {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.dataSource = [
-          ...this.dataSource,
-          {
-            position: this.dataSource.length + 1,
-            name: result.routeName,
-            distance: result.distance,
-            days: result.days,
-            payment: result.payment,
-          },
-        ];
+        this.http.post('/api/routes/create', result).subscribe(() => {
+          this.loadRouts();
+        });
       }
     });
   }
+  loadRouts() {
+    this.http.get<any[]>('/api/routes/').subscribe((routs) => {
+      this.dataSource = routs.map((r, i) => ({
+        position: i + 1,
+        name: r.name,
+        distance: r.distance,
+        days: r.days,
+        payment: r.payment,
+      }));
+    });
+  }
+  displayedColumns: string[] = ['position', 'name', 'distance', 'days', 'payment'];
+  dataSource: RoutsTable[] = [];
 
-  addRoute() {
-    if (this.routeName && this.distance !== null && this.days !== null && this.payment !== null) {
-      this.dataSource = [
-        ...this.dataSource,
-        {
-          position: this.dataSource.length + 1,
-          name: this.routeName,
-          distance: this.distance,
-          days: this.days,
-          payment: this.payment,
-        },
-      ];
+  name = '';
+  distance: number | null = null;
+  days: number | null = null;
+  payment: number | null = null;
 
-      this.routeName = '';
-      this.distance = null;
-      this.days = null;
-      this.payment = null;
-    }
+  ngOnInit() {
+    this.loadRouts();
   }
 }

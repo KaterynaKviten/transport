@@ -7,18 +7,14 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DriversLineDialogComponent } from './drivers-line-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
+
 export interface DriversTable {
   name: string;
   position: number;
   experience: number;
 }
-
-const ELEMENT_DATA: DriversTable[] = [
-  { position: 1, name: 'Флоренс Пью', experience: 2 },
-  { position: 2, name: 'Кілліан Мерфі', experience: 10 },
-  { position: 3, name: 'Генрі Кевіл', experience: 3 },
-];
-
 @Component({
   selector: 'app-drivers-line',
   imports: [
@@ -35,7 +31,7 @@ const ELEMENT_DATA: DriversTable[] = [
   styleUrl: './drivers-line.css',
 })
 export class DriversLine {
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private http: HttpClient) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DriversLineDialogComponent, {
@@ -44,19 +40,23 @@ export class DriversLine {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.dataSource = [
-          ...this.dataSource,
-          {
-            position: this.dataSource.length + 1,
-            name: `${result.lastName} ${result.firstName} ${result.middleName}`,
-            experience: result.experience,
-          },
-        ];
+        this.http.post('/api/driver/create', result).subscribe(() => {
+          this.loadDrivers(); // Оновити список після додавання
+        });
       }
     });
   }
+  loadDrivers() {
+    this.http.get<any[]>('/api/drivers').subscribe((drivers) => {
+      this.dataSource = drivers.map((d, i) => ({
+        position: i + 1,
+        name: `${d.lastName} ${d.firstName} ${d.middleName}`,
+        experience: d.experience ?? 0,
+      }));
+    });
+  }
   displayedColumns: string[] = ['position', 'name', 'experience'];
-  dataSource = ELEMENT_DATA;
+  dataSource: DriversTable[] = [];
 
   lastName = '';
   firstName = '';
@@ -69,5 +69,8 @@ export class DriversLine {
     this.firstName = '';
     this.middleName = '';
     this.experience = null;
+  }
+  ngOnInit() {
+    this.loadDrivers();
   }
 }

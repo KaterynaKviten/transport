@@ -5,14 +5,28 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-drivers-line-dialog',
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule],
-  // styleUrls: ['../carry.css'],
+  imports: [
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
+    MatIconModule,
+  ],
+  styleUrls: ['../carry.css'],
   template: `
-    <h2 mat-dialog-title>Додати водія</h2>
+    <div class="dialog-header">
+      <h2 mat-dialog-title>Додати водія</h2>
+      <button mat-icon-button (click)="onNoClick()" class="close-btn">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
     <mat-dialog-content>
       <mat-form-field class="full-width">
         <mat-label>Прізвище</mat-label>
@@ -32,11 +46,11 @@ import { MatDialogModule } from '@angular/material/dialog';
       </mat-form-field>
     </mat-dialog-content>
     <mat-dialog-actions>
-      <button mat-button (click)="onNoClick()">Скасувати</button>
       <button
         mat-button
         [mat-dialog-close]="{lastName, firstName, middleName, experience}"
         cdkFocusInitial
+        class="save-btn"
       >
         Зберегти
       </button>
