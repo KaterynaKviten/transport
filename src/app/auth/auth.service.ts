@@ -13,17 +13,17 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-    return this.http.post('/api/login/password', { username, password }).pipe(
-      tap((res: any) => {
-        localStorage.setItem('user', JSON.stringify(res.user));
-      })
-    );
+    return this.http.post('/api/login/password', { username, password });
   }
 
   register(username: string, password: string, email: string): Observable<any> {
     return this.http.post('/api/register', { username, password, email }).pipe(
       tap((res: any) => {
-        localStorage.setItem('user', JSON.stringify(res.user));
+        if (res.user) {
+          localStorage.setItem('user', JSON.stringify(res.user));
+        } else {
+          localStorage.setItem('user', JSON.stringify(res));
+        }
       })
     );
   }
@@ -33,6 +33,10 @@ export class AuthService {
 
   get currentUser(): any {
     const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
+    try {
+      return user ? JSON.parse(user) : null;
+    } catch {
+      return null;
+    }
   }
 }

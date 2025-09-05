@@ -30,8 +30,8 @@ export class LoginComponent {
 
   login() {
     this.authService.login(this.username, this.password).subscribe({
-      next: () => {
-        alert('Вхід успішний!');
+      next: (res: any) => {
+        localStorage.setItem('user', JSON.stringify(res.user));
         this.router.navigate(['/work-line']);
       },
       error: () => {

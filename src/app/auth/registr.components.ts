@@ -20,9 +20,9 @@ export class RegisterComponent {
   constructor(private authService: AuthService, private router: Router) {}
   register() {
     this.authService.register(this.username, this.password, this.email).subscribe({
-      next: () => {
-        alert('Реєстрація успішна!');
-        this.router.navigate(['/login']);
+      next: (res: any) => {
+        localStorage.setItem('user', JSON.stringify(res.user));
+        this.router.navigate(['/work-line']);
       },
       error: () => {
         alert('Реєстрація не вдалася');

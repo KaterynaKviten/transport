@@ -26,11 +26,7 @@
           </button>
         </span>
       </mat-toolbar>
-      <mat-toolbar>
-        <span *ngIf="!isLoggedIn()">
-          <a mat-button routerLink="/login">Увійти</a>
-        </span>
-      </mat-toolbar>
+      <mat-toolbar> </mat-toolbar>
       <div class="content">
         <router-outlet></router-outlet>
       </div>

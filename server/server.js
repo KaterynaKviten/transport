@@ -45,6 +45,7 @@ passport.use(
   })
 );
 app.use(express.json());
+
 app.post('/api/login/password', express.json(), (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) return next(err);
@@ -56,6 +57,7 @@ app.post('/api/login/password', express.json(), (req, res, next) => {
 app.get('/api/test', (req, res) => {
   res.json(['Test 1', 'Test 2', 'Test 3']);
 });
+
 app.post('/api/register', async (req, res) => {
   const { username, password, email } = req.body;
   if (!username || !password) {
@@ -72,7 +74,7 @@ app.post('/api/register', async (req, res) => {
       email,
       hashedPassword,
     });
-    res.status(201).json({ message: 'User registered' });
+    res.status(201).json({ message: 'User registered', user: { username, email } });
   } catch (err) {
     res.status(500).json({ message: 'Error hashing password or saving user' });
   }
