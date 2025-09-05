@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export interface WorkTable {
   position: number;
   name: string;
-  driver: string;
+  drivers: string[];
   startDate: string;
   endDate: string;
   payment: number;
@@ -44,7 +44,7 @@ export class WorkLine {
       this.dataSource = work.map((w, i) => ({
         position: i + 1,
         name: w.name,
-        driver: w.driver,
+        drivers: Array.isArray(w.drivers) ? w.drivers : [],
         startDate: w.startDate,
         endDate: w.endDate,
         payment: w.payment,
@@ -55,7 +55,7 @@ export class WorkLine {
   displayedColumns: string[] = [
     'position',
     'name',
-    'driver',
+    'drivers',
     'startDate',
     'endDate',
     'payment',
@@ -63,7 +63,7 @@ export class WorkLine {
   ];
   dataSource: WorkTable[] = [];
   name = '';
-  driver = '';
+  drivers: any[] = [];
   startDate: string = '';
   endDate: string = '';
   payment: number | null = null;

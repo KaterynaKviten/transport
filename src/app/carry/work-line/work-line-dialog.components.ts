@@ -44,12 +44,12 @@ import { CommonModule } from '@angular/common';
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Водій</mat-label>
-          <mat-select name="selectedDriver" [(ngModel)]="selectedDriver">
+          <mat-select [(ngModel)]="selectedDrivers" name="selectedDrivers" multiple>
             <mat-option
-              *ngFor="let driver of drivers"
-              [value]="driver.lastName + ' ' + driver.firstName + ' ' + driver.middleName"
+              *ngFor="let d of drivers"
+              [value]="d.lastName + ' ' + d.firstName + ' ' + d.middleName"
             >
-              {{ driver.lastName }} {{ driver.firstName }} {{ driver.middleName }}
+              {{ d.lastName }} {{ d.firstName }} {{ d.middleName }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -78,7 +78,7 @@ import { CommonModule } from '@angular/common';
           mat-button
           [mat-dialog-close]="{
             name: selectedRoute,
-            driver: selectedDriver,
+            drivers: selectedDrivers,
             startDate: startDate,
             endDate: endDate,
             payment: payment,
@@ -94,17 +94,15 @@ import { CommonModule } from '@angular/common';
 })
 export class WorkLineDialogComponents {
   name = '';
-  driver = '';
+  drivers: any[] = [];
   startDate: string = '';
   endDate: string = '';
   payment: number | null = null;
   bonus: number | null = null;
 
   selectedRoute: string = '';
-  selectedDriver: string = '';
-
+  selectedDrivers: string[] = [];
   routes: any[] = [];
-  drivers: any[] = [];
 
   constructor(
     private dialogRef: MatDialogRef<WorkLineDialogComponents>,
@@ -122,7 +120,7 @@ export class WorkLineDialogComponents {
   onSave(): void {
     this.dialogRef.close({
       name: this.selectedRoute,
-      driver: this.selectedDriver,
+      drivers: this.selectedDrivers,
       startDate: this.startDate,
       endDate: this.endDate,
       payment: this.payment,

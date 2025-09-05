@@ -110,7 +110,7 @@ app.post('/api/work/create', async (req, res) => {
   const workCollection = db.collection('work');
   await workCollection.insertOne({
     name: req.body.name,
-    driver: req.body.driver,
+    drivers: req.body.drivers,
     startDate: req.body.startDate,
     endDate: req.body.endDate,
     payment: req.body.payment,
