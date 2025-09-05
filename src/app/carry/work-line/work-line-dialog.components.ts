@@ -9,6 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-route-line-dialog',
@@ -22,6 +24,8 @@ import { CommonModule } from '@angular/common';
     MatDialogModule,
     MatIconModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   styleUrls: ['../carry.css'],
   template: `
@@ -56,17 +60,26 @@ import { CommonModule } from '@angular/common';
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Дата відправлення</mat-label>
-          <input matInput type="date" name="startDate" [(ngModel)]="startDate" />
+          <input matInput [matDatepicker]="picker1" name="startDate" [(ngModel)]="startDate" />
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Дата прибуття</mat-label>
-          <input matInput type="date" name="endDate" [(ngModel)]="endDate" />
+          <input matInput [matDatepicker]="picker2" name="endDate" [(ngModel)]="endDate" />
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Оплата (грн)</mat-label>
           <input matInput type="number" name="payment" [(ngModel)]="payment" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Стаж (років)</mat-label>
+          <input matInput type="number" name="experience" [(ngModel)]="experience" />
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
@@ -82,6 +95,7 @@ import { CommonModule } from '@angular/common';
             startDate: startDate,
             endDate: endDate,
             payment: payment,
+            experience: experience,
             bonus: bonus
           }"
           class="save-btn"
@@ -98,6 +112,7 @@ export class WorkLineDialogComponents {
   startDate: string = '';
   endDate: string = '';
   payment: number | null = null;
+  experience: number | null = null;
   bonus: number | null = null;
 
   selectedRoute: string = '';
@@ -124,6 +139,7 @@ export class WorkLineDialogComponents {
       startDate: this.startDate,
       endDate: this.endDate,
       payment: this.payment,
+      experience: this.experience,
       bonus: this.bonus,
     });
   }

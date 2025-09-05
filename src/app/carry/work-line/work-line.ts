@@ -13,6 +13,7 @@ export interface WorkTable {
   startDate: string;
   endDate: string;
   payment: number;
+  experience: number;
   bonus: number;
 }
 
@@ -48,6 +49,7 @@ export class WorkLine {
         startDate: w.startDate,
         endDate: w.endDate,
         payment: w.payment,
+        experience: w.experience,
         bonus: w.bonus,
       }));
     });
@@ -59,6 +61,7 @@ export class WorkLine {
     'startDate',
     'endDate',
     'payment',
+    'experience',
     'bonus',
   ];
   dataSource: WorkTable[] = [];
@@ -67,6 +70,7 @@ export class WorkLine {
   startDate: string = '';
   endDate: string = '';
   payment: number | null = null;
+  experience: number | null = null;
   bonus: number | null = null;
 
   ngOnInit() {

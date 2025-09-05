@@ -114,6 +114,7 @@ app.post('/api/work/create', async (req, res) => {
     startDate: req.body.startDate,
     endDate: req.body.endDate,
     payment: req.body.payment,
+    experience: req.body.experience,
     bonus: req.body.bonus,
   });
   res.status(201).json({ message: 'Work created' });
