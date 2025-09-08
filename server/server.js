@@ -7,6 +7,7 @@ import crypto from 'crypto';
 import { promisify } from 'util';
 import { getDb } from './db.js';
 import { booleanAttribute } from '@angular/core';
+import mongoose from 'mongoose';
 
 // const userDb = db.collection('users');
 const pbkdf2Async = promisify(crypto.pbkdf2);
@@ -16,6 +17,18 @@ const distDir = join(__dirname, '../dist/prj-angular/browser');
 const app = express();
 const salt = process.env.SALT || 'dev only';
 let userDb;
+
+mongoose.connect('mongodb://localhost:27017/prj-angular', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+mongoose.connection.on('connected', () => {
+  console.log('Mongoose connected to MongoDB');
+});
+mongoose.connection.on('error', (err) => {
+  console.error('Mongoose connection error:', err);
+});
+
 getDb().then((db) => {
   userDb = db.collection('users');
 });
@@ -192,3 +205,34 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+// Driver schema
+const driverSchema = new mongoose.Schema({
+  lastName: String,
+  firstName: String,
+  middleName: String,
+  experience: Number,
+});
+const Driver = mongoose.model('Driver', driverSchema);
+
+// Route schema
+const routeSchema = new mongoose.Schema({
+  name: String,
+  distance: Number,
+  days: Number,
+  payment: Number,
+});
+const Route = mongoose.model('Route', routeSchema);
+
+// Work schema
+const workSchema = new mongoose.Schema({
+  name: String,
+  drivers: [String],
+  startDate: String,
+  endDate: String,
+  experienceBonus: Number,
+  pay: Number,
+  payBonus: Number,
+  totalPay: Number,
+});
+const Work = mongoose.model('Work', workSchema);

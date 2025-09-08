@@ -35,7 +35,7 @@
   </ng-container>
 
   <ng-container matColumnDef="payment">
-    <th mat-header-cell *matHeaderCellDef>Виплата (маршрут + премія + стаж)</th>
+    <th mat-header-cell *matHeaderCellDef>Виплата (маршрут + стаж + премія)</th>
     <td mat-cell *matCellDef="let element">
       {{ element.totalPay }} ({{ element.pay }} + {{ element.experienceBonus }} +
       {{ element.payBonus }})
