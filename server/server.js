@@ -55,10 +55,6 @@ app.post('/api/login/password', express.json(), (req, res, next) => {
   })(req, res, next);
 });
 
-app.get('/api/test', (req, res) => {
-  res.json(['Test 1', 'Test 2', 'Test 3']);
-});
-
 app.post('/api/register', async (req, res) => {
   const { username, password, email } = req.body;
   if (!username || !password) {
