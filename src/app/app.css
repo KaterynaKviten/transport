@@ -15,3 +15,6 @@ mat-toolbar.custom-toolbar {
   margin-top: -40px;
   background-color: whitesmoke;
 }
+mat-sidenav {
+  width: 140px;
+}

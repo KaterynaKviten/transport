@@ -10,8 +10,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_NATIVE_DATE_FORMATS,
+  MatNativeDateModule,
+  NativeDateAdapter,
+} from '@angular/material/core';
 
 @Component({
   selector: 'app-route-line-dialog',
@@ -28,6 +34,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
+  ],
+  providers: [
+    { provide: DateAdapter, useClass: NativeDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS },
   ],
   styleUrls: ['../carry.css'],
   template: `
@@ -109,8 +119,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 export class WorkLineDialogComponents {
   name = '';
   drivers: any[] = [];
-  startDate: string = '';
-  endDate: string = '';
+  startDate: Date | null = null;
+  endDate: Date | null = null;
   payment: number | null = null;
   experience: boolean = false;
   bonus: number | null = null;
