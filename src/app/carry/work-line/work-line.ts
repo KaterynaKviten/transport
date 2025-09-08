@@ -12,9 +12,10 @@ export interface WorkTable {
   drivers: string[];
   startDate: string;
   endDate: string;
-  payment: number;
-  experience: number;
-  bonus: number;
+  experienceBonus: number;
+  pay: number;
+  payBonus: number;
+  totalPay: number;
 }
 
 @Component({
@@ -48,22 +49,15 @@ export class WorkLine {
         drivers: Array.isArray(w.drivers) ? w.drivers : [],
         startDate: w.startDate,
         endDate: w.endDate,
-        payment: w.payment,
-        experience: w.experience,
-        bonus: w.bonus,
+        experienceBonus: w.experienceBonus,
+
+        pay: w.pay,
+        payBonus: w.payBonus,
+        totalPay: w.totalPay,
       }));
     });
   }
-  displayedColumns: string[] = [
-    'position',
-    'name',
-    'drivers',
-    'startDate',
-    'endDate',
-    'payment',
-    'experience',
-    'bonus',
-  ];
+  displayedColumns: string[] = ['position', 'name', 'drivers', 'startDate', 'endDate', 'payment'];
   dataSource: WorkTable[] = [];
   name = '';
   drivers: any[] = [];

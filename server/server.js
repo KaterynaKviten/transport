@@ -104,19 +104,63 @@ app.post('/api/routes/create', async (req, res) => {
   });
   res.status(201).json({ message: 'Route created' });
 });
-
+const COEFFICIENT_EXPERIENCE_BONUS = 0.05;
 app.post('/api/work/create', async (req, res) => {
   const db = await getDb();
   const workCollection = db.collection('work');
+
+  const route = await db.collection('routes').find({ name: req.body.name }).limit(1).toArray();
+  if (route.length === 0) {
+    res.status(400).json({ message: 'Route not found' });
+    return;
+  }
+  const pay = route[0].payment * req.body.drivers.length;
+  let payBonus = 0;
+  if (Number.isFinite(req.body.bonus)) {
+    payBonus = req.body.bonus;
+  }
+  let experienceBonus = 0;
+  console.log(req.body);
+  if (req.body.experience) {
+    for (const driverName of req.body.drivers) {
+      const parts = driverName.split(' ');
+      if (parts.length !== 3) {
+        res.status(400).json({ message: 'Driver name format incorrect' });
+        return;
+      }
+      const driver = await db
+        .collection('drivers')
+        .find({
+          lastName: parts[0],
+          firstName: parts[1],
+          middleName: parts[2],
+        })
+        .limit(1)
+        .toArray();
+      if (driver.length === 0) {
+        res.status(400).json({ message: 'Driver not found' });
+        return;
+      }
+      experienceBonus = driver[0].experience * COEFFICIENT_EXPERIENCE_BONUS * route[0].payment;
+      console.log(
+        route[0].payment,
+        driver[0].experience,
+        COEFFICIENT_EXPERIENCE_BONUS,
+        experienceBonus
+      );
+    }
+  }
   await workCollection.insertOne({
     name: req.body.name,
     drivers: req.body.drivers,
     startDate: req.body.startDate,
     endDate: req.body.endDate,
-    payment: req.body.payment,
-    experience: req.body.experience,
-    bonus: req.body.bonus,
+    experienceBonus: experienceBonus,
+    pay: pay,
+    payBonus: payBonus,
+    totalPay: pay + payBonus + experienceBonus,
   });
+
   res.status(201).json({ message: 'Work created' });
 });
 

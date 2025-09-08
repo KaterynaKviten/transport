@@ -11,11 +11,13 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-route-line-dialog',
   standalone: true,
   imports: [
+    MatCheckboxModule,
     CommonModule,
     FormsModule,
     MatFormFieldModule,
@@ -72,15 +74,13 @@ import { MatNativeDateModule } from '@angular/material/core';
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Оплата (грн)</mat-label>
-          <input matInput type="number" name="payment" [(ngModel)]="payment" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Стаж (років)</mat-label>
-          <input matInput type="number" name="experience" [(ngModel)]="experience" />
-        </mat-form-field>
+        <mat-checkbox
+          [checked]="experience"
+          name="experience"
+          (change)="experience = $event.checked"
+        >
+          Врахувати стаж (коефіцієнт 5%)
+        </mat-checkbox>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Премія (грн)</mat-label>
@@ -112,7 +112,7 @@ export class WorkLineDialogComponents {
   startDate: string = '';
   endDate: string = '';
   payment: number | null = null;
-  experience: number | null = null;
+  experience: boolean = false;
   bonus: number | null = null;
 
   selectedRoute: string = '';
