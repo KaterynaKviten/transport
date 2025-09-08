@@ -21,7 +21,7 @@ export interface WorkTable {
 @Component({
   selector: 'app-work-line',
   standalone: true,
-  imports: [MatTableModule, DatePipe, WorkLineDialogComponents, MatIconModule],
+  imports: [MatTableModule, DatePipe, MatIconModule],
   templateUrl: './work-line.html',
   styleUrl: './work-line.css',
 })

@@ -20,9 +20,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [
     RouterOutlet,
-    RouteLine,
-    WorkLine,
-    DriversLine,
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
@@ -31,7 +28,6 @@ import { CommonModule } from '@angular/common';
     MatListModule,
     MatIconModule,
     RouterLink,
-    LoginComponent,
     CommonModule,
   ],
   templateUrl: './app.html',

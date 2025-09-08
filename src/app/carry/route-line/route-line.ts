@@ -19,14 +19,7 @@ export interface RoutsTable {
 @Component({
   selector: 'app-route-line',
   standalone: true,
-  imports: [
-    MatTableModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    RouteLineDialogComponent,
-    MatIconModule,
-  ],
+  imports: [MatTableModule, MatFormFieldModule, MatInputModule, FormsModule, MatIconModule],
   templateUrl: './route-line.html',
   styleUrl: './route-line.css',
 })

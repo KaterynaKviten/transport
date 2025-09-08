@@ -22,7 +22,6 @@ export interface DriversTable {
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    DriversLineDialogComponent,
     MatIconModule,
   ],
 

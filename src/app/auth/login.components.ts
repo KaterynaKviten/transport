@@ -11,14 +11,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    RegisterComponent,
-    RouterModule,
-  ],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, RouterModule],
   templateUrl: './login.components.html',
   styleUrls: ['./auth.css'],
 })
