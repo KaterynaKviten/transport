@@ -1,59 +1,118 @@
-# PrjAngular
+# PRJ-Angular: Система керування перевезеннями
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.0.
+## Опис
 
-## Development server
+Цей додаток дозволяє керувати водіями, маршрутами та перевезеннями.  
+Стек: **Angular** (фронтенд), **Node.js/Express** (бекенд), **MongoDB** (база даних, через Mongoose).
 
-To start a local development server, run:
+---
+
+## Встановлення
+
+### 1. Клонування репозиторію
 
 ```bash
+git clone <your-repo-url>
+cd prj-angular
+```
+
+### 2. Встановлення залежностей
+
+#### Фронтенд (Angular)
+
+```bash
+cd prj-angular
+npm install
+```
+
+#### Бекенд (Node.js)
+
+```bash
+cd server
+npm install
+```
+
+---
+
+## Запуск
+
+### 1. Запустіть MongoDB
+
+- Якщо встановлено як сервіс:
+  ```
+  net start MongoDB
+  ```
+- Або через mongod:
+  ```
+  mongod
+  ```
+
+### 2. Запустіть бекенд
+
+```bash
+cd server
+node server.js
+```
+
+Бекенд буде доступний на [http://localhost:3000](http://localhost:3000)
+
+### 3. Запустіть фронтенд
+
+```bash
+cd prj-angular
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Фронтенд буде доступний на [http://localhost:4200](http://localhost:4200)
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Основні можливості
 
-```bash
-ng generate component component-name
-```
+- Додавання, перегляд, редагування та видалення водіїв
+- Додавання, перегляд, редагування та видалення маршрутів
+- Додавання, перегляд, редагування та видалення перевезень
+- Авторизація користувачів
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## Структура проекту
 
-## Building
+- `src/app/` — Angular компоненти (водії, маршрути, перевезення, логін)
+- `server/server.js` — бекенд на Express + Mongoose
+- `server/db.js` — підключення до MongoDB
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## Налаштування
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- За замовчуванням MongoDB підключається до `mongodb://localhost:27017/prj-angular`
+- Для зміни порту або бази даних — змініть відповідні рядки у `server.js`
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Корисні команди
 
-```bash
-ng test
-```
+- **Запуск Angular:**  
+  `ng serve`
+- **Запуск бекенду:**  
+  `node server.js`
+- **Встановити Angular CLI (якщо потрібно):**  
+  `npm install -g @angular/cli`
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## Авторизація
 
-```bash
-ng e2e
-```
+- Для доступу до функцій додатку потрібно зареєструватися та увійти.
+- Паролі зберігаються у захищеному вигляді.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## Ліцензія
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+MIT (або ваша ліцензія)
+
+---
+
+**Успіхів у роботі з проектом!**

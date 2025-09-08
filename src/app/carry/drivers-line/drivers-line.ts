@@ -8,7 +8,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { DriversLineDialogComponent } from './drivers-line-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
 
 export interface DriversTable {
   name: string;
@@ -41,7 +40,7 @@ export class DriversLine {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.http.post('/api/driver/create', result).subscribe(() => {
-          this.loadDrivers(); // Оновити список після додавання
+          this.loadDrivers();
         });
       }
     });
@@ -64,7 +63,6 @@ export class DriversLine {
   experience: number | null = null;
 
   onNoClick() {
-    // Дія при скасуванні (можна закрити діалог або очистити поля)
     this.lastName = '';
     this.firstName = '';
     this.middleName = '';

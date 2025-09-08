@@ -6,7 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { RegisterComponent } from './registr.components';
 import { AuthService } from './auth.service';
 import { RouterModule } from '@angular/router';
-import { subscribeOn } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({

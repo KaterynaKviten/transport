@@ -14,6 +14,7 @@ import { RouterLink } from '@angular/router';
 import { LoginComponent } from './auth/login.components';
 import { AuthService } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-root',
   standalone: true,

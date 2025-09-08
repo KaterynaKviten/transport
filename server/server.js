@@ -9,7 +9,6 @@ import { getDb } from './db.js';
 import { booleanAttribute } from '@angular/core';
 import mongoose from 'mongoose';
 
-// const userDb = db.collection('users');
 const pbkdf2Async = promisify(crypto.pbkdf2);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -101,6 +100,21 @@ app.post('/api/driver/create', async (req, res) => {
   });
   res.status(201).json({ message: 'Driver created' });
 });
+app.get('/api/drivers', async (req, res) => {
+  const db = await getDb();
+  const driversCollection = db.collection('drivers');
+  const drivers = await driversCollection.find().toArray();
+  res.json(drivers);
+});
+
+// Driver schema
+const driverSchema = new mongoose.Schema({
+  lastName: String,
+  firstName: String,
+  middleName: String,
+  experience: Number,
+});
+const Driver = mongoose.model('Driver', driverSchema);
 
 app.post('/api/routes/create', async (req, res) => {
   const db = await getDb();
@@ -113,6 +127,43 @@ app.post('/api/routes/create', async (req, res) => {
   });
   res.status(201).json({ message: 'Route created' });
 });
+
+app.get('/api/routes', async (req, res) => {
+  const db = await getDb();
+  const routesCollection = db.collection('routes');
+  const routes = await routesCollection.find().toArray();
+  res.json(routes);
+});
+
+// Route schema
+const routeSchema = new mongoose.Schema({
+  name: String,
+  distance: Number,
+  days: Number,
+  payment: Number,
+});
+
+// Work schema
+const workSchema = new mongoose.Schema({
+  name: String,
+  drivers: [String],
+  startDate: String,
+  endDate: String,
+  experienceBonus: Number,
+  pay: Number,
+  payBonus: Number,
+  totalPay: Number,
+});
+const Work = mongoose.model('Work', workSchema);
+
+app.get('/api/work', async (req, res) => {
+  const db = await getDb();
+  const worksCollection = db.collection('work');
+  const work = await worksCollection.find().toArray();
+  res.json(work);
+});
+const Route = mongoose.model('Route', routeSchema);
+
 const COEFFICIENT_EXPERIENCE_BONUS = 0.05;
 app.post('/api/work/create', async (req, res) => {
   const db = await getDb();
@@ -129,7 +180,6 @@ app.post('/api/work/create', async (req, res) => {
     payBonus = req.body.bonus;
   }
   let experienceBonus = 0;
-  console.log(req.body);
   if (req.body.experience) {
     for (const driverName of req.body.drivers) {
       const parts = driverName.split(' ');
@@ -151,12 +201,6 @@ app.post('/api/work/create', async (req, res) => {
         return;
       }
       experienceBonus = driver[0].experience * COEFFICIENT_EXPERIENCE_BONUS * route[0].payment;
-      console.log(
-        route[0].payment,
-        driver[0].experience,
-        COEFFICIENT_EXPERIENCE_BONUS,
-        experienceBonus
-      );
     }
   }
   await workCollection.insertOne({
@@ -173,27 +217,6 @@ app.post('/api/work/create', async (req, res) => {
   res.status(201).json({ message: 'Work created' });
 });
 
-app.get('/api/drivers', async (req, res) => {
-  const db = await getDb();
-  const driversCollection = db.collection('drivers');
-  const drivers = await driversCollection.find().toArray();
-  res.json(drivers);
-});
-
-app.get('/api/routes', async (req, res) => {
-  const db = await getDb();
-  const routesCollection = db.collection('routes');
-  const routes = await routesCollection.find().toArray();
-  res.json(routes);
-});
-
-app.get('/api/work', async (req, res) => {
-  const db = await getDb();
-  const worksCollection = db.collection('work');
-  const work = await worksCollection.find().toArray();
-  res.json(work);
-});
-
 app.use(express.static(distDir));
 
 app.get(/.*/, (req, res) => {
@@ -205,34 +228,3 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
-// Driver schema
-const driverSchema = new mongoose.Schema({
-  lastName: String,
-  firstName: String,
-  middleName: String,
-  experience: Number,
-});
-const Driver = mongoose.model('Driver', driverSchema);
-
-// Route schema
-const routeSchema = new mongoose.Schema({
-  name: String,
-  distance: Number,
-  days: Number,
-  payment: Number,
-});
-const Route = mongoose.model('Route', routeSchema);
-
-// Work schema
-const workSchema = new mongoose.Schema({
-  name: String,
-  drivers: [String],
-  startDate: String,
-  endDate: String,
-  experienceBonus: Number,
-  pay: Number,
-  payBonus: Number,
-  totalPay: Number,
-});
-const Work = mongoose.model('Work', workSchema);
